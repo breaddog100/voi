@@ -66,7 +66,7 @@ function main_menu() {
 	    clear
 	    echo "===================VOI 一键部署脚本==================="
 		echo "沟通电报群：https://t.me/lumaogogogo"
-		echo "推荐配置：8C16G300G"
+		echo "最低配置：4C8G100G；推荐配置：8C16G100G"
 	    echo "请选择要执行的操作:"
 	    echo "1. 部署节点 install_node"
 	    echo "2. 创建账户 create-wallet"
