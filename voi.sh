@@ -5,7 +5,6 @@ function install_node() {
 	
 	sudo apt update
 	sudo apt upgrade
-	export VOINETWORK_IMPORT_ACCOUNT=1
 	/bin/bash -c "$(curl -fsSL https://get.voi.network/swarm)"
 
 }
