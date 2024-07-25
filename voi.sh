@@ -10,7 +10,6 @@ function install_node() {
 }
 
 #创建钱包，账户，获取助记词
-
 function create-wallet(){
 	#创建钱包
 	echo "请输入钱包名称："
