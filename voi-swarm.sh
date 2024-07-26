@@ -153,9 +153,8 @@ function start_node(){
 function update_config(){
 	stop_node
 	rm -f $HOME/node/config.json 
-	cd $HOME/node/
 	# 配置config.json
-	sudo cat << EOF > config.json
+	sudo cat << EOF > $HOME/node/config.json
 {    
 "Version": 31,
 "Archival": false,
