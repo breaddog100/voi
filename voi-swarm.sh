@@ -162,7 +162,7 @@ function update_config(){
 "NetAddress": "0.0.0.0:5011",
 "MaxConnectionsPerIP": 2,
 "IncomingConnectionsLimit": 90,
-"DNSBootstrapID": "<network>.voi.network?backup=<network>.voinetwork.net&dedup=<name>.(voi.*?)\\.(network|net)",
+"DNSBootstrapID": "<network>.voi.network?backup=<network>.voinetwork.net&dedup=<name>.(voi.*?)\\\\.(network|net)",
 "EnableMetricReporting": true,
 "EnableLedgerService": true,
 "EnableBlockService": true,
