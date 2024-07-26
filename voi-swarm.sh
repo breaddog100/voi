@@ -51,8 +51,7 @@ function install_node() {
 	
 	#创建节点文件夹和3个文件
 	mkdir $HOME/node
-	#检查node文件创建成功
-	cd node
+	cd $HOME/node
 	
 	#voi_testnet/node将此 repo 文件夹中的 config.json、logging.config 和 algod.token 的内容复制到这些文件中。
 	#确保更改logging.config文件中的 GUID，您可以使用此工具创建一个新的 GUID 。
@@ -67,10 +66,13 @@ function install_node() {
 "NetAddress": "0.0.0.0:5011",
 "MaxConnectionsPerIP": 2,
 "IncomingConnectionsLimit": 90,
-"DNSBootstrapID": "<network>.voi.network",
+"DNSBootstrapID": "<network>.voi.network?backup=<network>.voinetwork.net&dedup=<name>.(voi.*?)\\.(network|net)",
 "EnableMetricReporting": true,
 "EnableLedgerService": true,
-"EnableBlockService": true
+"EnableBlockService": true,
+"CatchpointFileHistoryLength": 3,
+"CatchpointTracking": 2,
+"MaxBlockHistoryLookback": 22000
 }
 EOF
 
@@ -148,6 +150,30 @@ function start_node(){
 	sudo docker compose up -d
 }
 
+function update_config(){
+	stop_node
+	rm -f $HOME/node/config.json 
+	# 配置config.json
+	sudo cat << EOF > config.json
+{    
+"Version": 31,
+"Archival": false,
+"GossipFanout": 8,
+"NetAddress": "0.0.0.0:5011",
+"MaxConnectionsPerIP": 2,
+"IncomingConnectionsLimit": 90,
+"DNSBootstrapID": "<network>.voi.network?backup=<network>.voinetwork.net&dedup=<name>.(voi.*?)\\.(network|net)",
+"EnableMetricReporting": true,
+"EnableLedgerService": true,
+"EnableBlockService": true,
+"CatchpointFileHistoryLength": 3,
+"CatchpointTracking": 2,
+"MaxBlockHistoryLookback": 22000
+}
+EOF
+	start_node
+}
+
 # 卸载节点
 function uninstall_node(){
     echo "你确定要卸载节点程序吗？这将会删除所有相关的数据。[Y/N]"
@@ -187,6 +213,7 @@ function main_menu() {
 	    echo "3. 检查同步状态 goal"
 	    echo "4. 启动节点 start_node"
 	    echo "5. 停止节点 stop_node"
+	    echo "6. 更新配置文件 update_config"
 	    echo "1618. 卸载节点 uninstall_node"
 	    echo "0. 退出脚本 exit"
 	    read -p "请输入选项: " OPTION
@@ -196,7 +223,8 @@ function main_menu() {
 	    2) catchup ;;
 	    3) goal ;;
 	    4) start_node ;;
-	    4) stop_node ;;
+	    5) stop_node ;;
+	    6) update_config ;;
 	    1618) uninstall_node ;;
 	    0) echo "退出脚本。"; exit 0 ;;
 	    *) echo "无效选项，请重新输入。"; sleep 3 ;;
